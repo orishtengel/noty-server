@@ -18,13 +18,27 @@ app.use(cors())
 app.use(compression())
 app.use(express.static('public'))
 
-app.post('/signup', async function(req, res) {
-    let user = await signup(req.body.email, req.body.password)
-    if(user)
-        res.status(200).send({ok:true})
-    else
-        res.status(401).send(JSON.stringify(error));
-})
+const userService = require("./user_service");
+
+app.post("/signup", async (req, res) => {
+    try {
+      const user = await userService.addUser(req.body.email, req.body.password);
+      console.log(user)
+      res.status(201).json(user);
+    } catch (err) {
+      res.status(401).json({ error: err.message });
+    }
+});
+  
+app.post("/signin", async (req, res) => {
+    const { email, password } = req.body;
+    try {
+        const user = await userService.authenticate(email, password);
+        res.json(user);
+    } catch (err) {
+        res.status(401).json({ error: err.message });
+    }
+});
 
 const httpServer = http.createServer(app);
 
