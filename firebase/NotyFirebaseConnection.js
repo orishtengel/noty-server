@@ -1,9 +1,9 @@
-// const admin = require('firebase-admin')
+const admin = require('firebase-admin')
 
-// const serviceAccount = require('./ezlinks-1b7b7-firebase-adminsdk-a4u13-8316ed2199.json')
+const serviceAccount = require('./ezlinks-1b7b7-firebase-adminsdk-a4u13-8316ed2199.json')
 
-// admin.initializeApp({
-//     credential = admin.credential.cert(serviceAccount)
-// })
+admin.initializeApp({
+    credential : admin.credential.cert(serviceAccount)
+})
 
-// module.exports = admin
+module.exports = admin

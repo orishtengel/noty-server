@@ -1,13 +1,11 @@
-const { admin } = require("./NotyFirebaseConnection");
-const db = admin.firestore()
+const  admin = require("./NotyFirebaseConnection");
 var { v4: uuidv4 } = require('uuid');
 
 module.exports = {
-    createUser: async (email, password) => {
-        await db.collection('users').create({
-             email: email.toLowerCase(),
-             password: password,
-             })
+    verifyToken: async (idtoken) => {
+       console.log(idtoken)
+       let resp = await admin.auth().verifyIdToken(idtoken)
+       console.log(resp)  
     },
 }
 

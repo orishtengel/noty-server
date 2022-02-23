@@ -19,6 +19,7 @@ app.use(compression())
 app.use(express.static('public'))
 
 const userService = require("./user_service");
+const { verifyToken } = require("./firebase/NotyFirestoreConnection");
 
 app.post("/signup", async (req, res) => {
     try {
@@ -27,6 +28,15 @@ app.post("/signup", async (req, res) => {
       res.status(201).json(user);
     } catch (err) {
       res.status(401).json({ error: err.message });
+    }
+});
+app.post("/verify", async (req, res) => {
+    const { email, idToken } = req.body;
+    try {
+        const user = await verifyToken(idToken,email);
+        res.json(user);
+    } catch (err) {
+        res.status(401).json({ error: err.message });
     }
 });
   
