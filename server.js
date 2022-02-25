@@ -19,7 +19,9 @@ app.use(compression())
 app.use(express.static('public'))
 
 const userService = require("./user_service");
-const { verifyToken } = require("./firebase/NotyFirestoreConnection");
+const { verifyToken, getCourse, getUsers, getUser, getCourses } = require("./firebase/NotyFirestoreConnection");
+
+// AUTH FUNCTIONS
 
 app.post("/signup", async (req, res) => {
     try {
@@ -49,6 +51,49 @@ app.post("/signin", async (req, res) => {
         res.status(401).json({ error: err.message });
     }
 });
+
+//USER FUNCTIONS 
+app.post("/getUser", async (req, res) => {
+    if(req.userToken) {
+        let user = await getUser(req.email)
+        if(user) {
+            user.email = req.email
+            res.status(200).send(user)
+        }
+        else {
+            res.status(400)
+        }
+    }
+});
+
+app.get('/getUsers', async function (req, res) {
+    if(req.userToken){
+         let arr = []
+         arr = await getUsers()
+         if(arr) {
+             res.status(200).send(arr)
+         }
+         else {
+             res.status(400)
+         }
+     }
+ })
+
+ //COURSE FUNCTIONS
+ app.get('/getCoures', async function (req, res) {
+    if(req.userToken){
+         let arr = []
+         arr = await getCourses()
+         if(arr) {
+             res.status(200).send(arr)
+         }
+         else {
+             res.status(400)
+         }
+     }
+ })
+
+
 
 const httpServer = http.createServer(app);
 
