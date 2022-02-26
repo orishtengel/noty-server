@@ -20,6 +20,18 @@ app.use(express.static('public'))
 
 const userService = require("./user_service");
 const { verifyToken, getCourse, getUsers, getUser, getCourses } = require("./firebase/NotyFirestoreConnection");
+const { decodeToken, createUserToken } = require("./firebase/token");
+
+// app.use(function (req, res, next) {
+//     console.log(req.rawHeaders.token)
+//     if(req.cookies["notytoken"]) {
+//         req.rawHeaders.token = decodeToken(req.cookies["notytoken"])
+//     }
+//     if(req.headers["token"]) {
+//         req.rawHeaders.token = decodeToken(req.headers["token"])
+//     }
+//     next()
+// })
 
 // AUTH FUNCTIONS
 
@@ -46,7 +58,14 @@ app.post("/signin", async (req, res) => {
     const { email, password } = req.body;
     try {
         const user = await userService.authenticate(email, password);
-        res.json(user);
+        if(user) {
+            let token = createUserToken(req.body.email, user.name, user.admin)
+            res.cookie('notytoken', token)
+            res.status(200).send({
+                user: user,
+                token: token
+            })
+        }
     } catch (err) {
         res.status(401).json({ error: err.message });
     }
@@ -80,17 +99,17 @@ app.get('/getUsers', async function (req, res) {
  })
 
  //COURSE FUNCTIONS
- app.get('/getCoures', async function (req, res) {
-    if(req.userToken){
+ app.get('/getCourses', async function (req, res) {
+    // if(req.userToken){
          let arr = []
          arr = await getCourses()
          if(arr) {
-             res.status(200).send(arr)
+             res.status(200).send({ok:true, data:arr})
          }
-         else {
+         else { 
              res.status(400)
          }
-     }
+    //  }
  })
 
 

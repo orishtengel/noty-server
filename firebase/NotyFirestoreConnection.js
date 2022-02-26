@@ -1,7 +1,7 @@
 const  admin = require("./NotyFirebaseConnection");
 var { v4: uuidv4 } = require('uuid');
 const { generateRandomColor } = require("../utils/colorutils");
-
+const db = admin.firestore()
 
 module.exports = {
     verifyToken: async (idtoken) => {
