@@ -21,7 +21,7 @@ const applicationRoutes = require("./applications/applications.routes");
 const authRoutes = require("./auth/auth.routes");
 
 app.use('/users', userRoutes)
-app.use('/app', applicationRoutes)
+app.use('/apps', applicationRoutes)
 app.use('/auth', authRoutes)
   
 

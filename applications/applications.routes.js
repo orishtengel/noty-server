@@ -20,8 +20,8 @@ applicationRoutes.get('/getApplications', async function (req, res) {
 
  applicationRoutes.post("/addSubscribe", async (req, res) => {
     try {
-        const { keyWebsite, email, date, startTime, endTime, frequncy } = req.body
-        let resp = await addSubscribe(keyWebsite, email, date, startTime, endTime, frequncy)
+        const { keyWebsite, date, startTime, endTime, frequncy } = req.body
+        let resp = await addSubscribe(keyWebsite, req.user.email, date, startTime, endTime, frequncy)
         if(resp) {
             res.status(200).send({ok: true})
         }

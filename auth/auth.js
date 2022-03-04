@@ -2,8 +2,8 @@ const { verifyToken } = require("../firebase/NotyFirestoreConnection");
 
 module.exports = {
     authMiddleware: async function (req, res, next) {
-        if(req.headers["notyToken"]) {
-            const idToken = req.headers["notyToken"]
+        if(req.headers["token"]) {
+            const idToken = req.headers["token"]
             try {
                 const user = await verifyToken(idToken);
                 if(user) {

@@ -17,6 +17,7 @@ module.exports = {
              phone: phone})
     },
     getUser: async (userId) => {
+        console.log(userId)
         const snapshot = await db.collection('users').doc(userId).get()
         return snapshot.data()
     },
@@ -48,12 +49,13 @@ module.exports = {
         
     },
     addSubscribe: async (keyWebsite, email, date, startTime, endTime, frequncy) => {
-        let res = await db.collection('application').doc(keyWebsite).collection('subscribes').doc(uuidv4()).create({
+        console.log(keyWebsite,  date, startTime, endTime, frequncy)
+        let res = await db.collection('application').doc(keyWebsite).collection('subscribes').add({
             email: email,
             date: date,
-            startTime:startTime,
-            endTime:endTime,
-            frequncy:frequncy
+            startTime: startTime,
+            endTime: endTime,
+            frequncy: frequncy
         })
         if(res) 
             return true
