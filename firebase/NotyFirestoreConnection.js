@@ -17,7 +17,6 @@ module.exports = {
              phone: phone})
     },
     getUser: async (userId) => {
-        console.log(userId)
         const snapshot = await db.collection('users').doc(userId).get()
         return snapshot.data()
     },
@@ -46,11 +45,28 @@ module.exports = {
             arr[doc.ref.id] = doc.data()
         })
         return arr
-        
     },
-    addSubscribe: async (keyWebsite, email, date, startTime, endTime, frequncy) => {
-        console.log(keyWebsite,  date, startTime, endTime, frequncy)
-        let res = await db.collection('application').doc(keyWebsite).collection('subscribes').add({
+    getSubscriptionsByIdAndEmail: async (id, email) => {
+        const snapshot = await db.collection('application').doc(id).collection('subscribes').get()
+        let arr = {}
+        snapshot.forEach(doc => {
+            if(doc.data().email == email)
+                arr[doc.ref.id] = doc.data()
+        })
+        return arr
+    },
+    getSubscriptionsById: async (id) => {
+        const snapshot = await db.collection('application').doc(id).collection('subscribes').get()
+        let arr = {}
+        snapshot.forEach(doc => {
+            arr[doc.ref.id] = doc.data()
+        })
+        return arr
+    },
+    addSubscribe: async (idWebsite, email, date, startTime, endTime, frequncy) => {
+        // console.log(keyWebsite,  date, startTime, endTime, frequncy)
+        let res = await db.collection('application').doc(idWebsite).collection('subscribes').add({
+            idWebsite: idWebsite,
             email: email,
             date: date,
             startTime: startTime,
@@ -61,8 +77,14 @@ module.exports = {
             return true
         else
             return false
-    },
+    },   
 
-   
+    deleteSubscribe: async (idWebsite,idSubscribe) => {  
+        let res = await db.collection('application').doc(idWebsite).collection('subscribes').doc(idSubscribe).delete()
+        if(res) 
+            return true
+        else
+            return undefined
+    },
 }
 
