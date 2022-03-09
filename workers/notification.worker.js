@@ -32,7 +32,7 @@ module.exports = {
                 })
                 let user = await getUser(subscriptions[id].email)
 
-                let title = "Hi " + user.name + " there are available courts today"
+                let title = "Hi " + user ? user.name : "" + " there are available courts today"
                 try {
                     var data = fs.readFileSync('./views/index.html', 'utf8')
                   } catch (err) {
