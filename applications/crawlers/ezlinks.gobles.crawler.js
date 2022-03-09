@@ -29,6 +29,7 @@ const options = {
 
 class EzLinksGolfCrawler {
     id = 'suUjxBrmaqG0rLyCtyHx'
+    url = "https://losrobles.ezlinksgolf.com/api/search/search"
     async refreshSessionCookie () {
         return new Promise((resolve, reject) => {
             request('https://losrobles.ezlinksgolf.com/api/search/init', { method: 'GET' }, (error, resp, body) => {
