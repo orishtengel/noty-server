@@ -42,8 +42,9 @@ module.exports = {
                     console.error(err)
                   }
                 const root = parse(data)
-                const alink = "<a style= 'color: #fffefe; href='" + url + "'> Book now! </a>"
+                const alink = "<a href='" + url + "'> Book now! </a>"
                 root.querySelector("#url").set_content(alink)
+                console.log(body)
                 root.querySelector("#data").set_content(body + "</h3>")
                 html = Buffer.from(String(root),'utf-8').toString()
                 sendEmail(subscriptions[id].email,title,html)
