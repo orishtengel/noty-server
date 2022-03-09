@@ -25,15 +25,16 @@ module.exports = {
                     if(dayjs(subscriptions[id].date).format('YYYY-MM-DD') == availableDateJs.format('YYYY-MM-DD')) { 
                        if(dayjs(subscriptions[id].startTime).hour() <= availableDateJs.hour() && availableDateJs.hour() <= dayjs(subscriptions[id].endTime).hour()) {
                             // if(dayjs(subscriptions[id].startTime).minute() <= availableDateJs.minute() && availableDateJs.minute() <= dayjs(subscriptions[id].endTime).minute()) {
-                                body += availableDateJs.hour() + ":" + availableDateJs.minute() + "\n"
+                                console.log(subscriptions[id].email)
+                                body += availableDateJs.hour() + ":" + availableDateJs.minute() + " "
                        }
                    }
                 })
                 let user = await getUser(subscriptions[id].email)
-                let title = "Hii " + user.name + " there is available court today"
+
+                let title = "Hi " + user.name + " there are available courts today"
                 try {
                     var data = fs.readFileSync('./views/index.html', 'utf8')
-                    console.log(data)
                   } catch (err) {
                     console.error(err)
                   }
