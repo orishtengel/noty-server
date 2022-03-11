@@ -1,7 +1,6 @@
 const  admin = require("./NotyFirebaseConnection");
 var { v4: uuidv4 } = require('uuid');
 const { generateRandomColor } = require("../utils/colorutils");
-const { async } = require("q");
 const db = admin.firestore()
 const storage = admin.storage()
 module.exports = {
@@ -27,7 +26,15 @@ module.exports = {
             arr[doc.ref.id] = doc.data()
         })
         return arr
-        
+    },
+    updateUserNotification: async (userId, platform, lastNotificationDate) => {
+        await db.collection('users').doc(userId).collection('notifications').add({
+            date: lastNotificationDate,
+            platform: platform
+        })
+        await db.collection('users').doc(userId).update({
+            lastNotificationDate: lastNotificationDate
+        })
     },
     deleteUser: async (userId) => {  
         let result = await db.collection('users').doc(userId).delete()
@@ -72,8 +79,7 @@ module.exports = {
         else
             return false
     },   
-
-    deleteSubscribe: async (idWebsite,idSubscribe) => {  
+    deleteSubscribe: async (idWebsite, idSubscribe) => {  
         let res = await db.collection('application').doc(idWebsite).collection('subscribes').doc(idSubscribe).delete()
         if(res) 
             return true
