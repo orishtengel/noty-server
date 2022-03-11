@@ -3,30 +3,32 @@ const { sendEmail } = require("./email.service")
 const dateFormat = require('dateformat');
 const moment = require('moment'); 
 const { default: parse } = require("node-html-parser");
+const fs = require('fs');
+const path = require('path');
 
 class NotificationManager {
 
-    async sendNotification(subscription, user, availableDates) {
+    async sendNotification(crawler, subscription, user, availableDates) {
         console.log(subscription)
         if(user.lastNotificationDate) {
             const lastNotificationDate = new Date(user.lastNotificationDate)
             const delta = moment(new Date()).diff(lastNotificationDate, 'minutes')
             console.log('too soon!', delta)
-            if(delta < 60)
+            if(delta < 40)
                 return
         }
 
         await updateUserNotification(subscription.email, 'email', dateFormat(new Date(), "isoDateTime"))
 
-        await this.sendEmailNotification(subscription.email, user, availableDates)
+        await this.sendEmailNotification(crawler, subscription.email, user, availableDates)
     }
 
-    async sendEmailNotification(email, user, availableDates) {
+    async sendEmailNotification(crawler, email, user, availableDates) {
         let title = "Hi there are available courts today "
         if(user) {
             title = "Hi " + user.name + " there are available courts today"
         }
-        const html = this._prepareEmailBody(availableDates)
+        const html = this._prepareEmailBody(crawler.url, availableDates)
         sendEmail(email, title, html)
     }
 
@@ -34,22 +36,22 @@ class NotificationManager {
 
     }
 
-    _prepareEmailBody(availableDates) {
+    _prepareEmailBody(bookingUrl, availableDates) {
         let body = "<h3 style = 'color: #fffefe; text-align: center'> "
         availableDates.map(availableDateJs => {
             body += availableDateJs.hour() + ":" + availableDateJs.minute() + " "
         })
         try {
-            var data = fs.readFileSync('./views/index.html', 'utf8')
+            var data = fs.readFileSync(path.join(__dirname, '..', 'views', 'index.html'), 'utf8')
         } 
         catch (err) {
             console.error(err)
         }
         const root = parse(data)
-        const alink = "<a href='" + url + "'> Book now! </a>"
+        const alink = "<a href='" + bookingUrl + "'> Book now! </a>"
         root.querySelector("#url").set_content(alink)
         root.querySelector("#data").set_content(body + "</h3>")
-        html = Buffer.from(String(root),'utf-8').toString()
+        let html = Buffer.from(String(root),'utf-8').toString()
         return html
     }
 }

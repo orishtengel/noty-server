@@ -5,7 +5,6 @@ const dateFormat = require('dateformat');
 const dayjs = require("dayjs");
 const { sendEmail } = require("../services/email.service");
 // const { emailTemlate } = require("../views/index.html")
-const fs = require('fs');
 const { default: parse } = require("node-html-parser");
 const NotificationManager = require("../services/notification.manager");
 const moment = require('moment'); 
@@ -50,7 +49,7 @@ class NotificationWorker {
 
                 let user = await getUser(subscriptions[id].email)
                 
-                notificationManager.sendNotification(subscriptions[id], user, datesAvailable)
+                notificationManager.sendNotification(crawler, subscriptions[id], user, datesAvailable)
             }
         })
     }
@@ -61,7 +60,7 @@ module.exports = {
     start: async () => {
         const worker = new NotificationWorker()
         setInterval(() => {
-            worker.crawl()
-        }, 60000)
+            // worker.crawl()
+        }, 6000)
     }
 }
