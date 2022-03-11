@@ -1,5 +1,6 @@
 const request = require("request");
 const dateFormat = require('dateformat');
+const dayjs = require('dayjs')
 
 const options = { 
     method: 'POST',
@@ -60,8 +61,9 @@ class EzLinksGolfCrawler {
                 const data = JSON.parse(body)
                 const arr = data['r06'].map(item => {
                     return {
-                        
                         title: item['r24'],
+                        hour: dayjs(item['r15']).format('HH:mm'),
+                        dayDate: dayjs(item['r15']).format('MM/DD/YYYY'),
                         date: new Date(item['r15']),
                         course: item['r16']
                     }

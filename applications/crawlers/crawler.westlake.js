@@ -1,5 +1,6 @@
 const request = require("request");
 const dateFormat = require('dateformat');
+const dayjs = require('dayjs')
 
 const options = { 
     method: 'GET',
@@ -23,6 +24,8 @@ class WestlakeCrawler {
                 resolve(data.map(item => {
                     return {
                         title: item['time'].split(' ')[1],
+                        hour: item['time'].split(' ')[1],
+                        dayDate: dayjs(item['time']).format('MM/DD/YYYY') ,
                         date: new Date(item['time']),
                         course: item['course_name']
                     }
