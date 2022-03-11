@@ -11,6 +11,7 @@ class NotificationManager {
         if(user.lastNotificationDate) {
             const lastNotificationDate = new Date(user.lastNotificationDate)
             const delta = moment(new Date()).diff(lastNotificationDate, 'minutes')
+            console.log('too soon!', delta)
             if(delta < 60)
                 return
         }
