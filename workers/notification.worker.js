@@ -1,6 +1,6 @@
 
 const { createCrawlers } = require("../applications/crawlers/crawler.factory");
-const { getSubscriptionsById, getUser } = require("../firebase/NotyFirestoreConnection");
+const { getSubscriptionsById, getUser, deleteSubscribe } = require("../firebase/NotyFirestoreConnection");
 const dateFormat = require('dateformat');
 const dayjs = require("dayjs");
 const { sendEmail } = require("../services/email.service");
@@ -8,6 +8,7 @@ const { sendEmail } = require("../services/email.service");
 const fs = require('fs');
 const { default: parse } = require("node-html-parser");
 const NotificationManager = require("../services/notification.manager");
+const moment = require('moment'); 
 
 const notificationManager = new NotificationManager()
 
@@ -21,8 +22,15 @@ class NotificationWorker {
             const subscriptions = await getSubscriptionsById(crawler.id)
             console.log(availableDates, subscriptions)
             for (const id in subscriptions) {
+
+                console.log(moment(new Date()).diff(moment(subscriptions[id].endTime), 'days'), moment(new Date()).isAfter(moment(subscriptions[id].endTime)))
+                if(moment(new Date()).diff(moment(subscriptions[id].endTime), 'days') > 1 && moment(new Date()).isAfter(moment(subscriptions[id].endTime))) {
+                    // old subscription to delete
+                    await deleteSubscribe(crawler.id, id)
+                    continue
+                }
+
                 const datesAvailable = []
-                
                 availableDates.map(availableDate => {
                     let availableDateJs = dayjs(availableDate.date)
                     if(dayjs(subscriptions[id].date).format('YYYY-MM-DD') == availableDateJs.format('YYYY-MM-DD')) { 
