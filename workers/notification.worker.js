@@ -23,8 +23,9 @@ class NotificationWorker {
             console.log(availableDates, subscriptions)
             for (const id in subscriptions) {
 
-                console.log(moment(new Date()).diff(moment(subscriptions[id].endTime), 'days'), moment(new Date()).isAfter(moment(subscriptions[id].endTime)))
-                if(moment(new Date()).diff(moment(subscriptions[id].endTime), 'days') > 1 && moment(new Date()).isAfter(moment(subscriptions[id].endTime))) {
+                const momentToday = moment(dayjs().format('MM/DD/YYYY'), 'MM/DD/YYYY')
+                const momentSub = moment(subscriptions[id].endTime.split(' ')[0], 'MM/DD/YYYY')
+                if(momentSub.diff(momentToday) < 0) {
                     // old subscription to delete
                     await deleteSubscribe(crawler.id, id)
                     continue
@@ -33,12 +34,15 @@ class NotificationWorker {
                 const datesAvailable = []
                 availableDates.map(availableDate => {
                     let availableDateJs = dayjs(availableDate.date)
-                    if(dayjs(subscriptions[id].date).format('YYYY-MM-DD') == availableDateJs.format('YYYY-MM-DD')) { 
-                       if(dayjs(subscriptions[id].startTime).hour() <= availableDateJs.hour() && availableDateJs.hour() <= dayjs(subscriptions[id].endTime).hour()) {
-                            // if(dayjs(subscriptions[id].startTime).minute() <= availableDateJs.minute() && availableDateJs.minute() <= dayjs(subscriptions[id].endTime).minute()) {
-                                datesAvailable.push(availableDateJs)
-                       }
-                   }
+                    // comapring the month,day, year part of the dates
+                    if(moment(subscriptions[id].date, 'MM/DD/YYYY').diff(moment(availableDate.dayDate, 'MM/DD/YYYY'), 'days') == 0 ) {
+                        if(moment(`${availableDate.dayDate} ${availableDate.hour}`, 'MM/DD/YYYY HH:mm').isBetween(
+                            moment(subscriptions[id].startTime, 'MM/DD/YYYY HH:mm'),
+                            moment(subscriptions[id].endTime, 'MM/DD/YYYY HH:mm')
+                        )) {
+                            datesAvailable.push(availableDateJs)
+                        }
+                    }
                 })
 
                 if(datesAvailable.length == 0)
@@ -55,8 +59,8 @@ class NotificationWorker {
 
 module.exports = {
     start: async () => {
-        // const worker = new NotificationWorker()
-        // worker.crawl()
+        const worker = new NotificationWorker()
+        worker.crawl()
 
         // setInterval(() => {
         //     worker.crawl()
