@@ -63,18 +63,10 @@ module.exports = {
         })
         return arr
     },
-    addSubscribe: async (idWebsite, courseName, email, date, startTime, endTime, frequncy) => {
+    addSubscribe: async (data) => {
         // console.log(keyWebsite,  date, startTime, endTime, frequncy)
-        let res = await db.collection('application').doc(idWebsite).collection('subscribes').add({
-            idWebsite: idWebsite,
-            email: email,
-            courseName: courseName,
-            date: date,
-            startTime: startTime,
-            endTime: endTime,
-            frequncy: frequncy
-        })
-        
+        let res = await db.collection('application').doc(data.idWebsite).collection('subscribes').add(data)
+
         if(res) 
             return true
         else
