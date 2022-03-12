@@ -10,7 +10,8 @@ module.exports = {
 
     //USER FUNCTIONS
     createUser: async (name, email, phone) => {
-        return await db.collection('users').doc(email).create({name: name.toLowerCase(),
+        return await db.collection('users').doc(email).add({
+             name: name,
              color: generateRandomColor(),
              admin: false,
              phone: phone})
