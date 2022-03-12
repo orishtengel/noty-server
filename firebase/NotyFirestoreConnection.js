@@ -10,8 +10,7 @@ module.exports = {
 
     //USER FUNCTIONS
     createUser: async (name, email, phone) => {
-        return await db.collection('users').doc(email).add({
-             name: name,
+        return await db.collection('users').doc(email).create({name: name.toLowerCase(),
              color: generateRandomColor(),
              admin: false,
              phone: phone})
@@ -27,11 +26,6 @@ module.exports = {
             arr[doc.ref.id] = doc.data()
         })
         return arr
-    },
-    updateUserPushNotificationToken: async (userId, token) => {
-        await db.collection('users').doc(userId).update({
-            pushNotificationToken: token
-        })
     },
     updateUserNotification: async (userId, platform, lastNotificationDate) => {
         await db.collection('users').doc(userId).collection('notifications').add({

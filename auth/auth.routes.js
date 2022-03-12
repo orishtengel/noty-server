@@ -15,6 +15,7 @@ authRoutes.post("/signup", async (req, res) => {
 
 authRoutes.post("/createUser", async (req, res) => {
     try {
+    
       const user = createUser(req.body.name,req.body.email, req.body.phone);
       if(user)
           res.status(201).json({ok:true});
@@ -39,7 +40,9 @@ authRoutes.post("/verify", async (req, res) => {
 });
 
 authRoutes.post("/signin", async (req, res) => {
+    
     const { email, password } = req.body;
+    console.log(email)
     try {
         const user = await authenticate(email, password);
         if(user) {
