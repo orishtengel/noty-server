@@ -28,6 +28,11 @@ module.exports = {
         })
         return arr
     },
+    updateUserPushNotificationToken: async (userId, token) => {
+        await db.collection('users').doc(userId).update({
+            pushNotificationToken: token
+        })
+    },
     updateUserNotification: async (userId, platform, lastNotificationDate) => {
         await db.collection('users').doc(userId).collection('notifications').add({
             date: lastNotificationDate,
