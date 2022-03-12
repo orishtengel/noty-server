@@ -1,12 +1,17 @@
 const express = require("express");
 const { async } = require("q");
 const { authMiddleware } = require("../auth/auth");
-const { getUser } = require("../firebase/NotyFirestoreConnection");
+const { getUser, updateUserPushNotificationToken } = require("../firebase/NotyFirestoreConnection");
 
 
 const userRoutes = express.Router()
 
 userRoutes.use(authMiddleware)
+
+userRoutes.post('/updatePushNotificationToken', async (req, res) => {
+  await updateUserPushNotificationToken(req.user.email, req.body.pushToken)
+  res.status(200).json({ ok: true })
+})
 
 userRoutes.get('/getUser', async function(req,res) {
     const user = await getUser(req.user.email)
