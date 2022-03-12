@@ -9,11 +9,10 @@ const path = require('path');
 class NotificationManager {
 
     async sendNotification(crawler, subscription, user, availableDates) {
-        console.log(subscription)
+        
         if(user.lastNotificationDate) {
             const lastNotificationDate = new Date(user.lastNotificationDate)
             const delta = moment(new Date()).diff(lastNotificationDate, 'minutes')
-            console.log('too soon!', delta)
             if(delta < 40)
                 return
         }

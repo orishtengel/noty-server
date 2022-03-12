@@ -42,7 +42,6 @@ authRoutes.post("/verify", async (req, res) => {
 authRoutes.post("/signin", async (req, res) => {
     
     const { email, password } = req.body;
-    console.log(email)
     try {
         const user = await authenticate(email, password);
         if(user) {

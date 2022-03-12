@@ -4,7 +4,6 @@ const key = 'sdfdfbhdftrevfg'
 
 module.exports = {
     createUserToken: (email) => {
-        console.log(email)
         return jwt.sign({
             email: email,
         },

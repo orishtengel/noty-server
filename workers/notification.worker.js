@@ -30,7 +30,6 @@ class NotificationWorker {
                 const url = crawler.url
                 const availableDates = await crawler.getAvailableDates(askingDate)
                 const subscriptions = await getSubscriptionsById(crawler.id)
-                console.log(availableDates, subscriptions)
                 for (const id in subscriptions) {
     
                     const momentToday = moment(dayjs().format('MM/DD/YYYY'), 'MM/DD/YYYY')
