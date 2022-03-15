@@ -14,6 +14,7 @@ userRoutes.post('/updatePushNotificationToken', async (req, res) => {
 })
 
 userRoutes.get('/getUser', async function(req,res) {
+    console.log(req.user.email)
     const user = await getUser(req.user.email)
     if (user) {
         res.status(200).json({ ok:true, data: user })

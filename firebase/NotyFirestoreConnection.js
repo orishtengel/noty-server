@@ -10,13 +10,13 @@ module.exports = {
 
     //USER FUNCTIONS
     createUser: async (name, email, phone) => {
-        return await db.collection('users').doc(email).create({name: name.toLowerCase(),
+        return await db.collection('users').doc(email.toLowerCase()).create({name: name,
              color: generateRandomColor(),
              admin: false,
              phone: phone})
     },
     getUser: async (userId) => {
-        const snapshot = await db.collection('users').doc(userId).get()
+        const snapshot = await db.collection('users').doc(userId.toLowerCase()).get()
         return snapshot.data()
     },
     getUsers: async () => {
@@ -28,7 +28,7 @@ module.exports = {
         return arr
     },
     updateUserNotification: async (userId, platform, lastNotificationDate) => {
-        await db.collection('users').doc(userId).collection('notifications').add({
+        await db.collection('users').doc(userId.toLowerCase()).collection('notifications').add({
             date: lastNotificationDate,
             platform: platform
         })
@@ -37,7 +37,7 @@ module.exports = {
         })
     },
     deleteUser: async (userId) => {  
-        let result = await db.collection('users').doc(userId).delete()
+        let result = await db.collection('users').doc(userId.toLowerCase()).delete()
         if(result) 
             return true
         else

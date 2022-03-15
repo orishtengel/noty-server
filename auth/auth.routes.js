@@ -15,8 +15,7 @@ authRoutes.post("/signup", async (req, res) => {
 
 authRoutes.post("/createUser", async (req, res) => {
     try {
-    
-      const user = createUser(req.body.name,req.body.email, req.body.phone);
+      const user = createUser(req.body.name, req.body.email, req.body.phone);
       if(user)
           res.status(201).json({ok:true});
     } catch (err) {
@@ -28,6 +27,7 @@ authRoutes.post("/verify", async (req, res) => {
     const { email, idToken } = req.body;
     try {
         const user = await verifyToken(idToken,email);
+        console.log("verigy,", user)
         if(user) {
             res.status(200).send({
                 user: user,
@@ -44,6 +44,7 @@ authRoutes.post("/signin", async (req, res) => {
     const { email, password } = req.body;
     try {
         const user = await authenticate(email, password);
+        console.log(user)
         if(user) {
             res.status(200).send({
                 user: user,
