@@ -35,11 +35,13 @@ class EzLinksGolfCrawler {
         return new Promise((resolve, reject) => {
             request('https://losrobles.ezlinksgolf.com/api/search/init', { method: 'GET' }, (error, resp, body) => {
                 try {
-                    console.log(resp)
                     if(resp && resp.headers)
                         resolve(resp.headers['set-cookie'][0].split(';')[0]) 
-                } catch (err) {
-                    console.log(err)
+                    else
+                        resolve('')
+                } 
+                catch (err) {
+                    resolve('')
                 }
             })
         })
