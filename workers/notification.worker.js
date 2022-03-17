@@ -59,7 +59,7 @@ class NotificationWorker {
     
                     let user = await getUser(subscriptions[id].email)
                     
-                    // notificationManager.sendNotification(crawler, subscriptions[id], user, datesAvailable)
+                    notificationManager.sendNotification(crawler, subscriptions[id], user, datesAvailable)
                 }
             })
         })
