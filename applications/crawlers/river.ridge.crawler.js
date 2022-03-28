@@ -42,7 +42,7 @@ class RiverRidgeCrawler {
                         hour: dt.format('HH:mm'),
                         dayDate: dt.format('MM/DD/YYYY'),
                         date: dt.toDate(),
-                        course: 'River Ridge'
+                        course: 'River Ridge Vineyard'
                     }
                 })
                 resolve(arr)
