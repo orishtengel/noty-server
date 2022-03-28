@@ -72,6 +72,6 @@ module.exports = {
         const worker = new NotificationWorker()
         setInterval(() => {
             worker.crawl()
-        }, 1000 * 60)
+        }, 1000 * 60 * 5)
     }
 }
