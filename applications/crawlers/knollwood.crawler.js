@@ -11,4 +11,4 @@ class KnollwoodCrawler extends TEETimesCrawler {
 
 module.exports = KnollwoodCrawler
 
-new KnollwoodCrawler().getAvailableDates().then(console.log)
+// new KnollwoodCrawler().getAvailableDates().then(console.log)

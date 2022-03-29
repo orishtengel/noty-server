@@ -84,4 +84,4 @@ class EzLinksDeBellCrawler {
 
 module.exports = EzLinksDeBellCrawler
 
-new EzLinksDeBellCrawler().getAvailableDates().then(console.log)
+// new EzLinksDeBellCrawler().getAvailableDates().then(console.log)

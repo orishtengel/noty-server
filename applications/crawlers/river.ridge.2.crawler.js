@@ -13,4 +13,4 @@ class RiverRidge2Crawler extends TEETimesCrawler {
 
 module.exports = RiverRidge2Crawler
 
-new RiverRidge2Crawler().getAvailableDates().then(console.log)
+// new RiverRidge2Crawler().getAvailableDates().then(console.log)
