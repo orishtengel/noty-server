@@ -16,7 +16,7 @@ module.exports = {
             new EzLinksDeBellCrawler(),
             new RiverRidgeCrawler(),
             new RiverRidge2Crawler(),
-            new KnollwoodCrawler()
+            new KnollwoodCrawler(),
             new BrooksideCrawler()
         ]
     }
