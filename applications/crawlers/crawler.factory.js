@@ -7,6 +7,7 @@ const KnollwoodCrawler = require("./knollwood.crawler")
 const RiverRidge2Crawler = require("./river.ridge.2.crawler")
 const RiverRidgeCrawler = require("./river.ridge.crawler")
 const SimiHillCrawler = require("./simi.hill.crawler")
+const TierraRejadaEzlinkCrawler = require('./ezlinks.tierrarejada.crawler')
 
 module.exports = {
     createCrawlers : () => {
@@ -20,6 +21,7 @@ module.exports = {
             new KnollwoodCrawler(),
             new BrooksideCrawler(),
             new SimiHillCrawler(),
+            new TierraRejadaEzlinkCrawler(),
         ]
     }
 }
