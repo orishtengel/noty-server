@@ -9,6 +9,7 @@ const options = {
 class WestlakeCrawler {
     id = "i3ZIYv7zhVQ2K5E6wlW3"
     url = "https://foreupsoftware.com"
+    title = "Westlake Golf Course"
     
     getAvailableDates(askingDate = new Date(), players=4, holes=18) {
         const headers = {

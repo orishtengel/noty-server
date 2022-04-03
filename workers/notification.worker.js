@@ -15,7 +15,6 @@ class NotificationWorker {
 
     crawl() {
         const crawlers = createCrawlers()
-
         const Dates = [
             dayjs().toDate(),
             dayjs().add(1, 'day').toDate(),
@@ -31,7 +30,6 @@ class NotificationWorker {
                 const availableDates = await crawler.getAvailableDates(askingDate)
                 const subscriptions = await getSubscriptionsById(crawler.id)
                 for (const id in subscriptions) {
-    
                     const momentToday = moment(dayjs().format('MM/DD/YYYY'), 'MM/DD/YYYY')
                     const momentSub = moment(subscriptions[id].endTime.split(' ')[0], 'MM/DD/YYYY')
                     if(momentSub.diff(momentToday) < 0) {
@@ -56,10 +54,9 @@ class NotificationWorker {
     
                     if(datesAvailable.length == 0)
                         continue
-    
                     let user = await getUser(subscriptions[id].email)
-                    
                     notificationManager.sendNotification(crawler, subscriptions[id], user, datesAvailable)
+                    
                 }
             })
         })
