@@ -30,6 +30,7 @@ const options = {
 class EzLinksDeBellCrawler {
     id = '860HOMzZ2E7dK60G5OjO'
     url = "https://debell.ezlinksgolf.com/"
+    title = "Debell Course"
     async refreshSessionCookie () {
         return new Promise((resolve, reject) => {
             request('https://debell.ezlinksgolf.com/api/search/init', { method: 'GET' }, (error, resp, body) => {

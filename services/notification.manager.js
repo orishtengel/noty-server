@@ -48,7 +48,7 @@ class NotificationManager {
         }
         const root = parse(data)
         const alink = "<a style = 'color: #fffefe; font-size: 20px' href='" + crwaler.url + "'> Book now! </a>"
-        root.querySelector("#title_course").set_content(course_title + crwaler.title + "</h4>")
+        root.querySelector("#title_course").set_content(course_title + crwaler.title ? crwaler.title : "" + "</h4>")
         root.querySelector("#url").set_content(alink)
         root.querySelector("#data").set_content(body + "</h3>")
         let html = Buffer.from(String(root),'utf-8').toString()

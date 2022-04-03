@@ -30,6 +30,7 @@ const options = {
 class EzLinksCamariloSpringsCrawler {
     id = 'U2kfOlbSx3Syk3upI3iX'
     url = "https://camarillosprings.ezlinksgolf.com/"
+    title = "Carmillo Springs Course"
     async refreshSessionCookie () {
         return new Promise((resolve, reject) => {
             request('https://camarillosprings.ezlinksgolf.com/api/search/init', { method: 'GET' }, (error, resp, body) => {
