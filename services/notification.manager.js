@@ -51,6 +51,7 @@ class NotificationManager {
         root.querySelector("#title_course").set_content(course_title + crwaler.title ? crwaler.title : "" + "</h4>")
         root.querySelector("#url").set_content(alink)
         root.querySelector("#data").set_content(body + "</h3>")
+        root.querySelector("#timestamp").set_content(new Date())
         let html = Buffer.from(String(root),'utf-8').toString()
         return html
     }
