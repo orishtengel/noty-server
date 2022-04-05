@@ -69,9 +69,9 @@ class NotificationWorker {
 module.exports = {
     start: async () => {
         const worker = new NotificationWorker()
-        worker.crawl()
-        // setInterval(() => {
-        //     worker.crawl()
-        // }, 1000 * 60 * 5)
+       
+        setInterval(() => {
+            worker.crawl()
+        }, 1000 * 60 * 5)
     }
 }
