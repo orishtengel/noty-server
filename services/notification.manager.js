@@ -9,12 +9,12 @@ const path = require('path');
 class NotificationManager {
 
     async sendNotification(crawler, subscription, user, availableDates) {
-        // if(user.lastNotificationDate) {
-        //     const lastNotificationDate = new Date(user.lastNotificationDate)
-        //     const delta = moment(new Date()).diff(lastNotificationDate, 'minutes')
-        //     if(delta < 40)
-        //         return
-        // }
+        if(user.lastNotificationDate) {
+            const lastNotificationDate = new Date(user.lastNotificationDate)
+            const delta = moment(new Date()).diff(lastNotificationDate, 'minutes')
+            if(delta < 40)
+                return
+        }
         
         await updateUserNotification(subscription.email, 'email', dateFormat(new Date(), "isoDateTime"))
     
