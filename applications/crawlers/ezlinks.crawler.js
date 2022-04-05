@@ -52,7 +52,7 @@ class EzLinksCrawler {
     }
     
     async getAvailableDates(askingDate = new Date(), players=4, holes=0) {
-
+        // console.log(this.url)
         const headers = {
             ...options, 
             url: `${this.url}/api/search/search`,
@@ -77,7 +77,7 @@ class EzLinksCrawler {
                 if (error) reject(error);
               
                 const data = JSON.parse(body)
-                console.log(data)
+                // console.log(data)
                 const arr = data['r06'].map(item => {
                     return {
                         title: item['r24'],

@@ -37,7 +37,8 @@ class NotificationWorker {
                         await deleteSubscribe(crawler.id, id)
                         continue
                     }
-    
+                   
+
                     const datesAvailable = []
                     availableDates.map(availableDate => {
                         let availableDateJs = dayjs(availableDate.date)
@@ -55,6 +56,7 @@ class NotificationWorker {
                     if(datesAvailable.length == 0)
                         continue
                     let user = await getUser(subscriptions[id].email)
+                   
                     notificationManager.sendNotification(crawler, subscriptions[id], user, datesAvailable)
                     
                 }
@@ -67,8 +69,9 @@ class NotificationWorker {
 module.exports = {
     start: async () => {
         const worker = new NotificationWorker()
-        setInterval(() => {
-            worker.crawl()
-        }, 1000 * 60 * 5)
+        worker.crawl()
+        // setInterval(() => {
+        //     worker.crawl()
+        // }, 1000 * 60 * 5)
     }
 }
